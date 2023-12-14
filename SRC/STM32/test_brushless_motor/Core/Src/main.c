@@ -58,7 +58,7 @@ uint8_t Rx2_Buff[RX2_Size];
 float Pitch=0, Roll=0, Heading=0;
 float Pitch_correction = 0, Roll_correction = 0, Heading_correction = 0;
 float Pitch_set = 0, Roll_set = 0, Heading_set = 0;
-float Roll_K_p = 70, Pitch_K_p = 70, Heading_K_p = 70;
+float Roll_K_p = 30, Pitch_K_p = 30, Heading_K_p = 70;
 uint8_t GY_A5[] = {0xA5}, GY_54[] = {0x54}, GY_51[] = {0x51}, GY_55[] = {0x55}, GY_Init_Command[]    = {0xA5, 0x54, 0xA5, 0x51}, GY_Request_Command[] = {0xA5, 0x51}, GY_Set_Command[] = {0xA5, 0x55};
 void initGY(){
 	HAL_Delay(500);
@@ -81,8 +81,6 @@ void readGY(){
 			Heading = (int16_t)(Rx2_Buff[(i+1)%8]<<8 | Rx2_Buff[(i+2)%8])/100.00 + Heading_set;
 			Pitch = (int16_t)(Rx2_Buff[(i+3)%8]<<8 | Rx2_Buff[(i+4)%8])/100.00 + Pitch_set + y;
 			Roll = (int16_t)(Rx2_Buff[(i+5)%8]<<8 | Rx2_Buff[(i+6)%8])/100.00 + Roll_set + x;
-			if(Roll >= 0) Roll -= 180;
-			else if(Roll < 0) Roll += 180;
 			
 			if(Heading > 180) Heading -= 360;
 			if(Heading <-180) Heading += 360;
@@ -97,6 +95,9 @@ void delay(long int _time){
 	for(int i=0; i<_time*1000;i++);
 }
 void motor(int FL, int BL, int BR, int FR){
+	BL -= 160+50;
+	FL -= 50;
+	FR -= 50;
 	if(FL > MAX_MOTOR_SPEED) FL = MAX_MOTOR_SPEED;
 	if(FL < 0)   						 FL = 0;
 	if(BL > MAX_MOTOR_SPEED) BL = MAX_MOTOR_SPEED;
@@ -151,7 +152,7 @@ int main(void)
 
   /* USER CODE END 1 */
 
-  /* MCU Configuration--------------------------------------------------------*/
+  /* MCU Configuration-------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
@@ -242,7 +243,7 @@ int main(void)
 			motor(0,0,0,0);
 		}
 		else {
-			//motor(z, 0, z, 0);
+			//motor(z, z, z, z);
 			motor(
 				z - Roll_correction + Pitch_correction + Heading_correction, 
 				z - Roll_correction - Pitch_correction - Heading_correction, 
