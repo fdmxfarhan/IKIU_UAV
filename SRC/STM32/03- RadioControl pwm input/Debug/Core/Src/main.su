@@ -1,0 +1,15 @@
+../Core/Src/main.c:121:6:initGY	8	static
+../Core/Src/main.c:133:6:readGY	24	static
+../Core/Src/main.c:152:6:delay	24	static
+../Core/Src/main.c:155:6:motor	24	static
+../Core/Src/main.c:174:6:HAL_UART_RxCpltCallback	24	static
+../Core/Src/main.c:185:6:HAL_GPIO_EXTI_Callback	32	static
+../Core/Src/main.c:254:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/main.c:267:5:main	16	static
+../Core/Src/main.c:398:6:SystemClock_Config	72	static
+../Core/Src/main.c:438:13:MX_TIM1_Init	80	static
+../Core/Src/main.c:515:13:MX_TIM2_Init	32	static
+../Core/Src/main.c:560:13:MX_USART1_UART_Init	8	static
+../Core/Src/main.c:593:13:MX_USART2_UART_Init	8	static
+../Core/Src/main.c:626:13:MX_GPIO_Init	40	static
+../Core/Src/main.c:672:6:Error_Handler	4	static,ignoring_inline_asm
